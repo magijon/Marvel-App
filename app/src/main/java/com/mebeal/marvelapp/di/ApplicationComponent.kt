@@ -2,8 +2,8 @@ package com.mebeal.marvelapp.di
 
 import com.mebeal.marvelapp.MarvelApplication
 import com.mebeal.marvelapp.di.modules.BussinesModule
-import com.mebeal.marvelapp.di.modules.ViewModelModule
 import com.mebeal.marvelapp.di.modules.ViewModule
+import com.mebeal.marvelapp.di.modules.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MarvelApp</string>
+
+    <!--Fragments Titles-->
+    <string name="fragment_characters_title">Charcaters Marvel</string>
+    <string name="fragment_character_details_title">Character Details</string>
+
 </resources>

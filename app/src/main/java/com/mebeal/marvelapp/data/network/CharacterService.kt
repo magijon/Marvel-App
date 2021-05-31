@@ -1,5 +1,7 @@
 package com.mebeal.marvelapp.data.network
 
+import com.mebeal.marvelapp.data.network.models.CharacterCallResponse
+import com.mebeal.marvelapp.data.network.models.CharacterListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +15,7 @@ interface CharacterService {
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String
-    ): Response<Any>
+    ): Response<CharacterListResponse>
 
     @GET("v1/public/characters/{characterId}")
     suspend fun getCharacter(
@@ -21,5 +23,5 @@ interface CharacterService {
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String
-    ): Response<Any>
+    ): Response<CharacterCallResponse>
 }
