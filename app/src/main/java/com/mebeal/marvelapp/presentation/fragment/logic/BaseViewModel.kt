@@ -16,8 +16,22 @@ abstract class BaseViewModel<T> : ViewModel() {
     protected var screenState = RestrictedLiveData<ScreenFlowState>()
     val screenFlowState: LiveData<ScreenFlowState> = screenState
 
-    protected var _resourceData : LiveData<Resource<T>> = MutableLiveData()
-    lateinit var resourceData : LiveData<Resource<T>>
+    protected var _resourceData : MutableLiveData<Resource<T>> = MutableLiveData()
+    var resourceData : LiveData<Resource<T>> = _resourceData
 
     open fun startLogic(additionalEntry: Any? = null) {}
+
+
+    open fun onFailureGetData(message: String?) {
+        screenState.setValue(ScreenFlowState.HideLoading)
+        screenState.setValue(ScreenFlowState.ShowError)
+    }
+
+    open fun onLoadingGetData() {
+        screenState.setValue(ScreenFlowState.ShowLoading)
+    }
+
+    open fun onSuccessGetData(data: T?) {
+        screenState.setValue(ScreenFlowState.HideLoading)
+    }
 }

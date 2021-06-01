@@ -13,7 +13,7 @@ class ViewModelModule {
     fun providesCharactersViewModel(networkUseCase: NetworkUseCase) = CharactersViewModel(networkUseCase)
 
     @Provides
-    fun providesCharacterDetailViewModel() = CharacterDetailViewModel()
+    fun providesCharacterDetailViewModel(networkUseCase: NetworkUseCase) = CharacterDetailViewModel(networkUseCase)
 
     @Provides
     fun providesMainViewModel() = MainViewModel()

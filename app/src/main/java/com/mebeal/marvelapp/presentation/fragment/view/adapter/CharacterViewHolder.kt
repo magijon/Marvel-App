@@ -1,6 +1,5 @@
 package com.mebeal.marvelapp.presentation.fragment.view.adapter
 
-import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +18,6 @@ class CharacterViewHolder(
         itemBinding.root.setOnClickListener(this)
     }
 
-    @SuppressLint("SetTextI18n")
     fun bind(item: CharactersDisplayModel) {
         itemBinding.character = item
     }

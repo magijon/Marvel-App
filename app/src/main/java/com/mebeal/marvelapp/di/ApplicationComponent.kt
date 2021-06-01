@@ -2,6 +2,7 @@ package com.mebeal.marvelapp.di
 
 import com.mebeal.marvelapp.MarvelApplication
 import com.mebeal.marvelapp.di.modules.BussinesModule
+import com.mebeal.marvelapp.di.modules.UtilsModule
 import com.mebeal.marvelapp.di.modules.ViewModule
 import com.mebeal.marvelapp.di.modules.viewmodel.ViewModelModule
 import dagger.BindsInstance
@@ -11,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [ViewModule::class, ViewModelModule::class, BussinesModule::class, AndroidInjectionModule::class]
+    modules = [ViewModule::class, ViewModelModule::class, BussinesModule::class, UtilsModule::class, AndroidInjectionModule::class]
 )
 interface ApplicationComponent {
 

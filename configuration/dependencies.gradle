@@ -1,0 +1,67 @@
+ext {
+    configuration = [
+            package               : "com.mebeal.MarvelApp",
+            gradleVersion         : '3.5.1',
+            googleServicesVersion : '4.3.2',
+            compileSdkVersion     : 29,
+            buildToolsVersion     : "29.0.3",
+            targetSdkVersion      : 29,
+            minSdkVersion         : 19,
+            versionCode           : 1,
+            versionName           : "1.0.0",
+            consumerProguardFile  : "consumer-rules.pro",
+            proguardDefaultRules  : "proguard-rules.pro",
+            proguardOptimizedRules: "proguard-android-optimize.txt",
+            kotlinVersion         : "1.4.0",
+            javaVersion           : 1.8,
+            dependenciesPath      : "${rootDir}/configuration/dependencies",
+            buildConfigPath       : "${rootDir}/configuration/build",
+            kotlinAnnotation      : "kapt",
+            javaAnnotation        : "annotationProcessor"
+    ]
+
+    libraries = [
+            appCompatVersion           : "1.1.0",
+            multiDexVersion            : "1.0.3",
+            constraintLayoutVersion    : "2.0.1",
+            androidLifecycleVersion    : "2.2.0",
+            androidLifecycleTestVersion: "2.1.0",
+            recyclerViewVersion        : "1.1.0",
+            retrofitVersion            : "2.6.2",
+            daggerVersion              : "2.26",
+            rxjavaVersion              : "2.2.13",
+            rxandroidVersion           : "2.1.1",
+            firebaseCoreVersion        : "17.2.1",
+            firebaseCMVersion          : "20.1.5",
+            junitVersion               : "4.12",
+            testRunnerVersion          : "1.1.1",
+            mockitoVersion             : "2.27.0",
+            powerMockitoVersion        : "2.0.2",
+            espressoVersion            : "3.2.0",
+            viewPager2Version          : "1.0.0-beta02",
+            glideVersion               : "4.11.0",
+            navigationComponentVersion : "2.2.1",
+            mockKVersion               : "1.9.3"
+    ]
+
+    constants = [
+            TEXT_TYPE       : "String",
+            ARRAY_TYPE      : "String[]",
+            API_KEY         : "API_KEY",
+            PRIVATE_KEY     : "PRIVATE_KEY",
+    ]
+
+    build = [
+            debug  : [
+                    apyKey        : "\"051da8778257d2433a49bd4c3770b65c\"",
+                    privateKey    : "\"b34e2407d9de74be57cf243b2f3a3c50ebe0532e\""
+            ],
+            release: [
+                    apyKey        : "\"051da8778257d2433a49bd4c3770b65c\"",
+                    privateKey    : "\"b34e2407d9de74be57cf243b2f3a3c50ebe0532e\""
+            ]
+    ]
+
+    annotationKey = configuration.javaAnnotation
+
+}

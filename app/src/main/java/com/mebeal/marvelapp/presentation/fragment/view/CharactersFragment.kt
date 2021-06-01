@@ -8,8 +8,8 @@ import com.mebeal.marvelapp.databinding.CharactersFragmentBinding
 import com.mebeal.marvelapp.presentation.fragment.logic.CharactersViewModel
 import com.mebeal.marvelapp.presentation.fragment.view.adapter.CharactersAdapter
 import com.mebeal.marvelapp.presentation.model.CharactersDisplayModel
-import com.mebeal.marvelapp.presentation.model.mappers.CharactersDisplayModelMapper
 import com.mebeal.marvelapp.presentation.utils.addLifeCycleObserver
+import com.mebeal.marvelapp.presentation.utils.gone
 import com.mebeal.marvelapp.presentation.utils.visible
 
 class CharactersFragment : BaseFragment<CharactersViewModel, CharactersFragmentBinding, CharacterListResponse>(), CharactersAdapter.CharacterItemListener {
@@ -29,16 +29,14 @@ class CharactersFragment : BaseFragment<CharactersViewModel, CharactersFragmentB
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     if (!recyclerView.canScrollVertically(1)) {
                         dataBinding.progressBarMoreItems.visible()
-                        viewModel.loadCharacters()
+                        viewModel.loadCharacters((this@apply.adapter as CharactersAdapter).itemCount)
                     }
                 }
             })
         }
-    }
-
-    override fun onSuccessGetData(data: CharacterListResponse?) {
-        data?.let {
-            loadRecyclerView(CharactersDisplayModelMapper.fromCharacterListResponse(data))
+        addLifeCycleObserver(viewModel.characters){
+            loadRecyclerView(it)
+            dataBinding.progressBarMoreItems.gone()
         }
     }
 

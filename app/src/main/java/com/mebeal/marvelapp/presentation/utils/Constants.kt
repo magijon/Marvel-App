@@ -1,9 +1,8 @@
 package com.mebeal.marvelapp.presentation.utils
 
 
-//Security
-const val API_KEY = "051da8778257d2433a49bd4c3770b65c"
-const val PRIVATE_KEY = "b34e2407d9de74be57cf243b2f3a3c50ebe0532e"
+//Bundles Key
+const val SELECT_ID = "select_id"
 
 //Images
 const val SIZE_IMAGE_LIST = "standard_amazing"

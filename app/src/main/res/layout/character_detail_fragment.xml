@@ -53,27 +53,18 @@
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:text="@{viewModel.character.name}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Super Hero Marvel" />
-
-
-                <ProgressBar
-                    android:id="@+id/progress_bar_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="140dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image"
                     android:layout_width="200dp"
                     android:layout_height="324dp"
                     android:layout_marginTop="30dp"
+                    app:set_image_item_normal="@{viewModel.character}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +80,7 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold"
+                    app:set_data_format="@{viewModel.character.date}"
                     app:layout_constraintEnd_toEndOf="@id/image"
                     app:layout_constraintStart_toStartOf="@+id/image"
                     app:layout_constraintTop_toBottomOf="@id/image"
@@ -102,15 +94,16 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="16dp"
-                    android:justificationMode="inter_word"
+                    android:layout_marginBottom="20dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:text="@{viewModel.character.description}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/last_update"
-                    tools:targetApi="o"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="It is a description of character Marvel. His adventures and special poers" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
