@@ -17,8 +17,7 @@ class CharactersAdapter(private val listener: CharacterItemListener) :
     private val itemsAux = ArrayList<CharactersDisplayModel>()
 
     private fun setItems(items: ArrayList<CharactersDisplayModel>) {
-        this.items.clear()
-        this.items.addAll(items.sortedWith(compareBy { it.name }))
+        this.items.addAll(this.items.size, items.sortedWith(compareBy { it.name }))
         if (itemsAux.size < items.size) {
             itemsAux.clear()
             itemsAux.addAll(items)
@@ -27,8 +26,7 @@ class CharactersAdapter(private val listener: CharacterItemListener) :
     }
 
     fun updateItems(itemsNew: List<CharactersDisplayModel>) {
-        items.addAll(itemsNew)
-        setItems(items)
+        setItems(arrayListOf<CharactersDisplayModel>().apply { addAll(itemsNew) })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {

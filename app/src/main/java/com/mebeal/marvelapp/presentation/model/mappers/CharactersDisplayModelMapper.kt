@@ -1,5 +1,6 @@
 package com.mebeal.marvelapp.presentation.model.mappers
 
+import com.mebeal.marvelapp.data.network.models.CharacterCallResponse
 import com.mebeal.marvelapp.data.network.models.CharacterListResponse
 import com.mebeal.marvelapp.data.network.models.CharacterResponse
 import com.mebeal.marvelapp.presentation.model.CharactersDisplayModel
@@ -14,8 +15,8 @@ class CharactersDisplayModelMapper {
                 }
             }
 
-        fun fromCharacterResponse(characterResponse: CharacterResponse): CharactersDisplayModel =
-            transformCharacterResponse(characterResponse)
+        fun fromCharacterResponse(characterResponse: CharacterCallResponse): CharactersDisplayModel =
+            transformCharacterResponse(characterResponse.data.results[0])
 
 
         private fun transformCharacterResponse(characterResponse: CharacterResponse): CharactersDisplayModel =

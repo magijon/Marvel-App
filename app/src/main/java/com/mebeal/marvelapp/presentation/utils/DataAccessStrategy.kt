@@ -1,25 +1,29 @@
 package com.mebeal.marvelapp.presentation.utils
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.mebeal.marvelapp.data.network.Resource
 import com.mebeal.marvelapp.data.network.Resource.Status.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.suspendCoroutine
 
 fun <A> performGetOperation(
+    mutableLiveData: MutableLiveData<Resource<A>>,
     networkCall: suspend () -> Resource<A>
-): LiveData<Resource<A>> =
-    liveData(Dispatchers.IO) {
-        emit(Resource.loading<A>())
-        val responseStatus = networkCall.invoke()
-        when (responseStatus.status) {
-            SUCCESS -> {
-                emitSource(MutableLiveData(responseStatus))
+) {
+    GlobalScope.launch(Dispatchers.IO) {
+            mutableLiveData.postValue(Resource.loading())
+            val responseStatus = networkCall.invoke()
+            when (responseStatus.status) {
+                SUCCESS -> {
+                    mutableLiveData.postValue(responseStatus)
+                }
+                else -> {
+                    mutableLiveData.postValue(Resource.error("Don't get data"))
+                }
             }
-            else -> {
-                emit(Resource.error<A>(responseStatus.message ?: "Error getting data"))
-            }
-        }
     }
+}
+

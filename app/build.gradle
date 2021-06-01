@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply from: "${rootDir}/configuration/dependencies.gradle"
 apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 30
@@ -22,9 +24,20 @@ android {
     }
 
     buildTypes {
-        release {
+        debug{
             minifyEnabled false
+            debuggable true
+            shrinkResources false
+            buildConfigField constants.TEXT_TYPE, constants.API_KEY, build.debug.apyKey
+            buildConfigField constants.TEXT_TYPE, constants.PRIVATE_KEY, build.debug.privateKey
+        }
+        release {
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField constants.TEXT_TYPE, constants.API_KEY, build.release.apyKey
+            buildConfigField constants.TEXT_TYPE, constants.PRIVATE_KEY, build.release.privateKey
         }
     }
     compileOptions {

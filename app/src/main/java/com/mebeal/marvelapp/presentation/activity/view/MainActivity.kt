@@ -1,13 +1,17 @@
 package com.mebeal.marvelapp.presentation.activity.view
 
 import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.mebeal.marvelapp.R
 import com.mebeal.marvelapp.databinding.ActivityMainBinding
 import com.mebeal.marvelapp.presentation.activity.logic.MainViewModel
-import com.mebeal.marvelapp.presentation.fragment.logic.BaseViewModel
 import com.mebeal.marvelapp.presentation.utils.gone
 import com.mebeal.marvelapp.presentation.utils.isVisible
 import com.mebeal.marvelapp.presentation.utils.visible
+import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -21,9 +25,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
-    override fun setBindingVariables() {
-
-    }
+    override fun setBindingVariables() {}
 
     override fun getLoader(): View = dataBinding.progressBar
+
+    override fun initViews() {
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+
+        val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(navController.graph)
+        setSupportActionBar(dataBinding.toolbar)
+        dataBinding.toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
 }

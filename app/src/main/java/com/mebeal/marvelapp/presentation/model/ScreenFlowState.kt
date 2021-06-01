@@ -19,13 +19,15 @@ sealed class ScreenFlowState {
         val onResponseAction: DualResponseClickAction
     ) : ScreenFlowState()
 
-    class NavigateToCharacterDetail(id: Int) : ScreenFlowState()
+    class NavigateToCharacterDetail(val id: Int) : ScreenFlowState()
 
     object ShowLoading : ScreenFlowState()
 
     object HideLoading : ScreenFlowState()
 
     object RemoveDialog : ScreenFlowState()
+
+    object ShowError : ScreenFlowState()
 
     class NavigateBackFragment(val times: Int = 1) : ScreenFlowState()
 
