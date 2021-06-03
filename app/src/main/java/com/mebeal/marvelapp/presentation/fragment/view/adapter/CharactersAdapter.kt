@@ -17,11 +17,11 @@ class CharactersAdapter(private val listener: CharacterItemListener) :
     private val itemsAux = ArrayList<CharactersDisplayModel>()
 
     private fun setItems(items: ArrayList<CharactersDisplayModel>) {
-        this.items.addAll(this.items.size, items.sortedWith(compareBy { it.name }))
-        if (itemsAux.size < items.size) {
-            itemsAux.clear()
-            itemsAux.addAll(items)
-        }
+        this.items.addAll(
+            this.items.size,
+            items.sortedWith(compareBy { it.name }).let { it.subList(itemCount, it.size) })
+        itemsAux.clear()
+        itemsAux.addAll(this.items)
         notifyDataSetChanged()
     }
 
@@ -29,8 +29,12 @@ class CharactersAdapter(private val listener: CharacterItemListener) :
         setItems(arrayListOf<CharactersDisplayModel>().apply { addAll(itemsNew) })
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        val binding: ItemCharacterBinding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CharacterViewHolder {
+        val binding: ItemCharacterBinding =
+            ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CharacterViewHolder(binding, listener)
     }
 
@@ -48,7 +52,9 @@ class CharactersAdapter(private val listener: CharacterItemListener) :
                     true
                 ) ?: false
             })
-            setItems(itemsFilters)
+            items.clear()
+            items.addAll(itemsFilters)
+            notifyDataSetChanged()
         }
     }
 }

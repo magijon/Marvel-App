@@ -9,16 +9,19 @@ import com.mebeal.marvelapp.presentation.model.ScreenFlowState
 import com.mebeal.marvelapp.presentation.model.ScreenFlowState.NavigateToCharacterDetail
 import com.mebeal.marvelapp.presentation.model.mappers.CharactersDisplayModelMapper
 import com.mebeal.marvelapp.presentation.utils.performGetOperation
+import com.mebeal.marvelapp.presentation.wrapper.RestrictedLiveData
 
 class CharactersViewModel(private val providerNetworkUseCase: NetworkUseCase) :
     BaseViewModel<CharacterListResponse>() {
 
-    private val _characters: MutableLiveData<List<CharactersDisplayModel>> = MutableLiveData()
-    val characters: LiveData<List<CharactersDisplayModel>> = _characters
-    var itemCount = 0
+    private val _characters: MutableLiveData<MutableList<CharactersDisplayModel>> =
+        MutableLiveData(mutableListOf())
+    val characters: LiveData<MutableList<CharactersDisplayModel>> = _characters
 
-    override fun startLogic(additionalEntry: Any?) {
-        loadCharacters(itemCount)
+    var isLoading: Boolean = false
+
+    init {
+        loadCharacters(_characters.value?.size ?: 0)
     }
 
     fun selectCharacter(characterId: Int) {
@@ -34,13 +37,21 @@ class CharactersViewModel(private val providerNetworkUseCase: NetworkUseCase) :
     override fun onSuccessGetData(data: CharacterListResponse?) {
         super.onSuccessGetData(data)
         data?.let {
-            _characters.setValue(CharactersDisplayModelMapper.fromCharacterListResponse(it))
-            itemCount += it.data.results.size
+            _characters.value = _characters.value?.apply {
+                this.addAll(
+                    this.size,
+                    CharactersDisplayModelMapper.fromCharacterListResponse(it)
+                )
+            }
+            isLoading = false
         }
     }
 
+
     override fun onLoadingGetData() {
-        if (itemCount == 0)
+        if (_characters.value?.size ?: 0 == 0)
             super.onLoadingGetData()
+        isLoading = true
     }
+
 }

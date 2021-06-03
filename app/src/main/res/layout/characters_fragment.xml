@@ -69,27 +69,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/presentation_layout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@color/colorPrimary"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="40dp"
-                    android:src="@drawable/logo_marvel" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
