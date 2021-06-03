@@ -1,14 +1,15 @@
 package com.mebeal.marvelapp.presentation.fragment.view
 
-import android.provider.SyncStateContract
+import android.annotation.SuppressLint
 import com.mebeal.marvelapp.R
 import com.mebeal.marvelapp.data.network.models.CharacterCallResponse
 import com.mebeal.marvelapp.databinding.CharacterDetailFragmentBinding
+import com.mebeal.marvelapp.presentation.activity.view.MainActivity
 import com.mebeal.marvelapp.presentation.fragment.logic.CharacterDetailViewModel
 import com.mebeal.marvelapp.presentation.utils.SELECT_ID
-import com.mebeal.marvelapp.presentation.utils.addLifeCycleObserver
 
-class CharacterDetailFragment : BaseFragment<CharacterDetailViewModel, CharacterDetailFragmentBinding, CharacterCallResponse>() {
+class CharacterDetailFragment :
+    BaseFragment<CharacterDetailViewModel, CharacterDetailFragmentBinding, CharacterCallResponse>() {
 
 
     override fun getAdditionalEntry(): Any = requireArguments().getInt(SELECT_ID)

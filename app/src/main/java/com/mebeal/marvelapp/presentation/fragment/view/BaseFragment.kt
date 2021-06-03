@@ -1,5 +1,6 @@
 package com.mebeal.marvelapp.presentation.fragment.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.mebeal.marvelapp.data.network.Resource
 import com.mebeal.marvelapp.presentation.activity.view.BaseActivity
 import com.mebeal.marvelapp.presentation.activity.view.MainActivity
@@ -17,12 +19,13 @@ import com.mebeal.marvelapp.presentation.model.ScreenFlowState.HideLoading
 import com.mebeal.marvelapp.presentation.model.ScreenFlowState.ShowLoading
 import com.mebeal.marvelapp.presentation.navigation.NavigationContract
 import com.mebeal.marvelapp.presentation.utils.addLifeCycleObserver
+import com.mebeal.marvelapp.presentation.utils.removeObservers
 import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
 import java.util.*
 import javax.inject.Inject
 
-abstract class BaseFragment <V : BaseViewModel<R>, T : ViewDataBinding, R : Any?> : Fragment() {
+abstract class BaseFragment<V : BaseViewModel<R>, T : ViewDataBinding, R : Any?> : Fragment() {
 
     protected lateinit var viewModel: V
     protected lateinit var dataBinding: T
@@ -32,6 +35,8 @@ abstract class BaseFragment <V : BaseViewModel<R>, T : ViewDataBinding, R : Any?
 
     @Inject
     protected lateinit var navigator: NavigationContract
+
+    private var isNavigating = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,17 +69,20 @@ abstract class BaseFragment <V : BaseViewModel<R>, T : ViewDataBinding, R : Any?
 
     protected open fun initViews() {
         addLifeCycleObserver(viewModel.resourceData) {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    viewModel.onSuccessGetData(it.data)
+            if (!isNavigating)
+                when (it.status) {
+                    Resource.Status.SUCCESS -> {
+                        viewModel.onSuccessGetData(it.data)
+                    }
+                    Resource.Status.LOADING -> {
+                        viewModel.onLoadingGetData()
+                    }
+                    Resource.Status.ERROR -> {
+                        viewModel.onFailureGetData(it.message)
+                    }
                 }
-                Resource.Status.LOADING -> {
-                    viewModel.onLoadingGetData()
-                }
-                Resource.Status.ERROR -> {
-                    viewModel.onFailureGetData(it.message)
-                }
-            }
+            else
+                isNavigating = false
         }
 
         addLifeCycleObserver(viewModel.screenFlowState) {
@@ -84,8 +92,7 @@ abstract class BaseFragment <V : BaseViewModel<R>, T : ViewDataBinding, R : Any?
                 else -> navigator.handle(this, it)
             }
         }
-
-
+        (activity as BaseActivity<*, *>).supportActionBar?.setHomeAsUpIndicator(com.mebeal.marvelapp.R.color.transparent)
         viewModel.startLogic(getAdditionalEntry())
     }
 
@@ -97,5 +104,17 @@ abstract class BaseFragment <V : BaseViewModel<R>, T : ViewDataBinding, R : Any?
 
     fun hideToolbar() {
         (activity as? MainActivity)?.hideToolbar()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        isNavigating = true
+        removeObservers(
+            listOf(
+                viewModel.errorDisplay,
+                viewModel.screenFlowState,
+                viewModel.resourceData
+            )
+        )
     }
 }

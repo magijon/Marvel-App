@@ -1,6 +1,7 @@
 package com.mebeal.marvelapp.presentation.activity.view
 
 import android.view.View
+import android.view.animation.AlphaAnimation
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,7 +12,6 @@ import com.mebeal.marvelapp.presentation.activity.logic.MainViewModel
 import com.mebeal.marvelapp.presentation.utils.gone
 import com.mebeal.marvelapp.presentation.utils.isVisible
 import com.mebeal.marvelapp.presentation.utils.visible
-import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -34,8 +34,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
-        val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
         setSupportActionBar(dataBinding.toolbar)
         dataBinding.toolbar.setupWithNavController(navController, appBarConfiguration)
+
+        animPresentation()
+    }
+
+    private fun animPresentation() {
+        dataBinding.presentationLayout.animate().alpha(0F).setDuration(2000);
     }
 }
