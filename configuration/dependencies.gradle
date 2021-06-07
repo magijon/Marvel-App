@@ -57,8 +57,8 @@ ext {
                     privateKey    : "\"b34e2407d9de74be57cf243b2f3a3c50ebe0532e\""
             ],
             release: [
-                    apyKey        : "\"051da8778257d2433a49bd4c3770b65c\"",
-                    privateKey    : "\"b34e2407d9de74be57cf243b2f3a3c50ebe0532e\""
+                    apyKey        : "\"\"",
+                    privateKey    : "\"\""
             ]
     ]
 

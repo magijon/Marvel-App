@@ -4,5 +4,6 @@
     <!--Fragments Titles-->
     <string name="fragment_characters_title">Charcaters Marvel</string>
     <string name="fragment_character_details_title">Character Details</string>
+    <string name="check_api_key_message">Verify that you have correctly configured the keys.</string>
 
 </resources>
