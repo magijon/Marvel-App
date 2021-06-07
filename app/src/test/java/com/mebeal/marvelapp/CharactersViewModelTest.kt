@@ -10,7 +10,6 @@ import com.mebeal.marvelapp.data.usecase.contract.NetworkUseCase
 import com.mebeal.marvelapp.presentation.fragment.logic.CharactersViewModel
 import com.mebeal.marvelapp.presentation.model.ScreenFlowState
 import com.mebeal.marvelapp.presentation.model.mappers.CharactersDisplayModelMapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
@@ -144,6 +143,19 @@ class CharactersViewModelTest : BaseTestCorountine() {
         assert(charactersViewModel.isLoading)
     }
 
+    @Test
+    fun `on failure get data custom`() {
+        //Give
+        val message = "message"
+
+        //When
+        charactersViewModel.onFailureGetData("message")
+
+        //Then
+        assert(charactersViewModel.screenFlowState.value is ScreenFlowState.ShowError)
+        assert((charactersViewModel.screenFlowState.value as ScreenFlowState.ShowError).message == message)
+    }
+
 
     //Get Mocks
     private fun getCharacterListResponse(): CharacterListResponse {
@@ -159,4 +171,9 @@ class CharactersViewModelTest : BaseTestCorountine() {
             )
         )
     }
+}
+
+object BuildConfig {
+    const val API_KEY = ""
+    const val PRIVATE_KEY = ""
 }
