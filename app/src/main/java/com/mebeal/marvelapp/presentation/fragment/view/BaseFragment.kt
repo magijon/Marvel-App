@@ -77,7 +77,9 @@ abstract class BaseFragment<V : BaseViewModel<R>, T : ViewDataBinding, R : Any?>
                         viewModel.onLoadingGetData()
                     }
                     Resource.Status.ERROR -> {
-                        viewModel.onFailureGetData("${it.message}\n${context?.getString(com.mebeal.marvelapp.R.string.check_api_key_message)}")
+                        viewModel.onFailureGetData(
+                            "${it.message}\n${context?.getString(com.mebeal.marvelapp.R.string.check_api_key_message)}"
+                        )
                     }
                 }
             else
@@ -88,11 +90,15 @@ abstract class BaseFragment<V : BaseViewModel<R>, T : ViewDataBinding, R : Any?>
             when (it) {
                 is ShowLoading -> (activity as? BaseActivity<*, *>)?.showLoading()
                 is HideLoading -> (activity as? BaseActivity<*, *>)?.hideLoading()
-                is ShowError -> viewModel.showMessageError(it.message)
+                is ShowError -> viewModel.showMessageError(it.message, it.action)
                 is ShowSingleDialog -> createSingleDialog(
                     it.singleDialogDisplayModel,
                     it.onContinueAction
                 )
+                is CloseApplication -> {
+                    activity?.finish()
+                    System.exit(0)
+                }
                 else -> navigator.handle(this, it)
             }
         }

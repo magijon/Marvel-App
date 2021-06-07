@@ -25,7 +25,7 @@ abstract class BaseViewModel<T> : ViewModel() {
 
     open fun onFailureGetData(message: String?) {
         screenState.setValue(ScreenFlowState.HideLoading)
-        screenState.setValue(ScreenFlowState.ShowError(message ?: "An error has occurred"))
+        screenState.setValue(ScreenFlowState.ShowError(message ?: "An error has occurred", null))
     }
 
     open fun onLoadingGetData() {
@@ -36,14 +36,14 @@ abstract class BaseViewModel<T> : ViewModel() {
         screenState.setValue(ScreenFlowState.HideLoading)
     }
 
-    open fun showMessageError(message: String) {
+    open fun showMessageError(message: String, action: (() -> Unit)?) {
         screenState.setValue(
             ScreenFlowState.ShowSingleDialog(
                 SingleDialogDisplayModel(
                     "Error",
                     message,
                     "Accept"
-                ), null
+                ), action
             )
         )
     }

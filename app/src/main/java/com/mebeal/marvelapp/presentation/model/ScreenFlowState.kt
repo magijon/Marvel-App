@@ -27,7 +27,9 @@ sealed class ScreenFlowState {
 
     object RemoveDialog : ScreenFlowState()
 
-    class ShowError(val message : String) : ScreenFlowState()
+    object CloseApplication : ScreenFlowState()
+
+    class ShowError(val message: String, val action: (() -> Unit)?) : ScreenFlowState()
 
     class NavigateBackFragment(val times: Int = 1) : ScreenFlowState()
 

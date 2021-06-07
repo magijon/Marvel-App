@@ -2,6 +2,7 @@ package com.mebeal.marvelapp.presentation.fragment.logic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mebeal.marvelapp.BuildConfig
 import com.mebeal.marvelapp.data.network.models.CharacterListResponse
 import com.mebeal.marvelapp.data.usecase.contract.NetworkUseCase
 import com.mebeal.marvelapp.presentation.model.CharactersDisplayModel
@@ -9,7 +10,6 @@ import com.mebeal.marvelapp.presentation.model.ScreenFlowState
 import com.mebeal.marvelapp.presentation.model.ScreenFlowState.NavigateToCharacterDetail
 import com.mebeal.marvelapp.presentation.model.mappers.CharactersDisplayModelMapper
 import com.mebeal.marvelapp.presentation.utils.performGetOperation
-import com.mebeal.marvelapp.presentation.wrapper.RestrictedLiveData
 
 class CharactersViewModel(private val providerNetworkUseCase: NetworkUseCase) :
     BaseViewModel<CharacterListResponse>() {
@@ -52,6 +52,16 @@ class CharactersViewModel(private val providerNetworkUseCase: NetworkUseCase) :
         if (characters.value?.size ?: 0 == 0)
             super.onLoadingGetData()
         isLoading = true
+    }
+
+    override fun onFailureGetData(message: String?) {
+        if (BuildConfig.API_KEY.isEmpty() || BuildConfig.PRIVATE_KEY.isEmpty()) {
+            screenState.setValue(ScreenFlowState.HideLoading)
+            screenState.setValue(ScreenFlowState.ShowError(message ?: "An error has occurred") {
+                screenState.setValue(ScreenFlowState.CloseApplication)
+            })
+        } else
+            super.onFailureGetData(message)
     }
 
 }
