@@ -5,26 +5,29 @@ import com.mebeal.marvelapp.utils.TestScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.junit.rules.TestRule
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
 
 @ExperimentalCoroutinesApi
-open class BaseTestCrountine : BaseTest() {
+open class BaseTestCorountine : BaseTest() {
 
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
+    val testDispatcher = TestCoroutineDispatcher()
+
 
     @Before
     override fun setup() {
         super.setup()
-        //resProvider.mockColors()
         Dispatchers.setMain(testDispatcher)
     }
 
     @After
-    fun tearDown() {
+    open fun tearDown() {
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
     }

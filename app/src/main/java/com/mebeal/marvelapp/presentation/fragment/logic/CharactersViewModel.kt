@@ -49,7 +49,7 @@ class CharactersViewModel(private val providerNetworkUseCase: NetworkUseCase) :
 
 
     override fun onLoadingGetData() {
-        if (_characters.value?.size ?: 0 == 0)
+        if (characters.value?.size ?: 0 == 0)
             super.onLoadingGetData()
         isLoading = true
     }

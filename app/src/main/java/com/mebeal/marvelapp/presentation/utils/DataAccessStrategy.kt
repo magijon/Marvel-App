@@ -7,16 +7,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.Response
 import kotlin.coroutines.suspendCoroutine
 
 fun <A> performGetOperation(
     mutableLiveData: MutableLiveData<Resource<A>>,
-    networkCall: suspend () -> Resource<A>
+    networkCall: suspend () -> Resource<A>?
 ) {
     GlobalScope.launch(Dispatchers.IO) {
             mutableLiveData.postValue(Resource.loading())
-            val responseStatus = networkCall.invoke()
-            when (responseStatus.status) {
+            val responseStatus : Resource<A>? = networkCall.invoke()
+            when (responseStatus?.status) {
                 SUCCESS -> {
                     mutableLiveData.postValue(responseStatus)
                 }
