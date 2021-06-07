@@ -36,9 +36,6 @@ Android app that shows a list of Marvel comic characters obtained from the web h
 - Select your BuildVariant
 - Build and Run app
 
-**The app should run
-**
-
 ### Some functionalities
 
 - Presentation screen with animation.
