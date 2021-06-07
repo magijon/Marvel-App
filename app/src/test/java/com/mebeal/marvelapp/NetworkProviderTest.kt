@@ -1,6 +1,6 @@
 package com.mebeal.marvelapp
 
-import com.mebeal.marvelapp.base.BaseTestCrountine
+import com.mebeal.marvelapp.base.BaseTestCorountine
 import com.mebeal.marvelapp.data.network.CharacterService
 import com.mebeal.marvelapp.data.network.Resource.Status.ERROR
 import com.mebeal.marvelapp.data.network.Resource.Status.SUCCESS
@@ -25,7 +25,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @ExperimentalCoroutinesApi
-class NetworkProviderTest : BaseTestCrountine() {
+class NetworkProviderTest : BaseTestCorountine() {
 
     @Mock
     private lateinit var characterService: CharacterService
