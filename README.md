@@ -28,6 +28,7 @@ Android app that shows a list of Marvel comic characters obtained from the web h
 - Download the project and open it with Android Studio
 - For debug tests, an API_KEY and a PRIVATE_KEY are supplied by default
 - For use in release you must add your credentials in the file ../configuration/dependencies.gradle: 
+
             release: [
                     apyKey        : "\"put me here\"",
                     privateKey    : "\"put me here\""
