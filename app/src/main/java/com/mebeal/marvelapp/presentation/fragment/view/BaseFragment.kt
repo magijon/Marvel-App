@@ -77,7 +77,6 @@ abstract class BaseFragment<V : BaseViewModel<R>, T : ViewDataBinding, R : Any?>
                         viewModel.onLoadingGetData()
                     }
                     Resource.Status.ERROR -> {
-
                         viewModel.onFailureGetData("${it.message}\n${context?.getString(com.mebeal.marvelapp.R.string.check_api_key_message)}")
                     }
                 }
